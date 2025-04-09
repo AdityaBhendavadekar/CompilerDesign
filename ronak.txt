@@ -1,0 +1,92 @@
+%{
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int tempVarCount = 1;
+
+char* newTemp() {
+    char* temp = (char*) malloc(10);
+    sprintf(temp, "t%d", tempVarCount++);
+    return temp;
+}
+
+void yyerror(const char *s) {
+    printf("Error: %s\n", s);
+    fflush(stdout);
+}
+%}
+
+%union {
+    char* str;
+}
+
+%token <str> ID NUM
+%type <str> expr term factor
+
+%%
+
+program:
+      stmt '\n'
+    | program stmt '\n'
+    ;
+
+stmt:
+      ID '=' expr {
+        printf("%s = %s\n", $1, $3); fflush(stdout);
+      }
+    ;
+
+expr:
+      expr '+' term {
+        char* temp = newTemp();
+        printf("%s = %s + %s\n", temp, $1, $3); fflush(stdout);
+        $$ = temp;
+      }
+    | term {
+        $$ = $1;
+      }
+    ;
+
+term:
+      term '*' factor {
+        char* temp = newTemp();
+        printf("%s = %s * %s\n", temp, $1, $3); fflush(stdout);
+        $$ = temp;
+      }
+    | factor {
+        $$ = $1;
+      }
+    ;
+
+factor:
+      ID { $$ = $1; }
+    | NUM { $$ = $1; }
+    ;
+
+%%
+
+int main() {
+    setvbuf(stdout, NULL, _IONBF, 0);
+    yyparse();
+    return 0;
+}
+ .y
+%{
+#include "expr.tab.h"
+%}
+
+%%
+
+[a-zA-Z][a-zA-Z0-9]*  { yylval.str = strdup(yytext); return ID; }
+[0-9]+                { yylval.str = strdup(yytext); return NUM; }
+"="                   { return '='; }
+"*"                   { return '*'; }
+"+"                   { return '+'; }
+\n                    { return '\n'; }
+[ \t]                 ;
+.                     ;
+
+%%
+
+int yywrap() { return 1; }
