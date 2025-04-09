@@ -1,0 +1,11 @@
+^[a-z^a]*(aeiou)+[a-z]* {
+    printf("contains vowels in aeiou format only.-> %s\n", yytext);
+}
+
+^([^aeiou]*a[^aeiou]*e[^aeiou]*i[^aeiou]*o[^aeiou]*u[^aeiou]*)$ {
+    printf("contains vowel");
+}
+
+^(a*ba*ba*ba*)$ {
+    printf("contains only 3b's-> %s\n", yytext);
+}

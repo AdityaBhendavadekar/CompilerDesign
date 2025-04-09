@@ -1,0 +1,6 @@
+how to run yacc program
+
+flex pgmname.l
+bison -d pgmname.y
+gcc lex.yy.c pgmname.tab.c
+a.exe

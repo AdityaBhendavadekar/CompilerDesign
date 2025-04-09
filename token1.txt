@@ -1,0 +1,30 @@
+Preprocessor directive: Token: #
+Preprocessor directive: Token: include
+Comparison operator: Token: <
+header file keyword: Token: stdio.h
+Comparison operator: Token: >
+
+return keyword: Token: void
+main keyword: Token: main
+Brackets: Token: (
+Brackets: Token: )
+Brackets: Token: {
+
+datatype keyword: Token: int
+indentifier Token: x
+Special symbol: Token: ,
+indentifier Token: y
+Special symbol: Token: ,
+indentifier Token: z
+Assignment operator: Token: =
+number Token: 0
+Special symbol: Token: ;
+
+IO keyword: Token: printf
+Brackets: Token: (
+string literal keyword: Token: "Hellox df.../!"
+Brackets: Token: )
+Special symbol: Token: ;
+
+Brackets: Token: }
+Tokens: 25
